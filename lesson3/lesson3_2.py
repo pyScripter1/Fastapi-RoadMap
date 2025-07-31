@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Path
 from fastapi.responses import PlainTextResponse
 from starlette.responses import HTMLResponse
 
@@ -46,7 +46,7 @@ async def root_add(name: str = "Noname", age: int = 0):
 # ge: значение параметра должно быть больше или равно определенному значению
 
 @app.get("/test_users")
-def users(name: str = Query(default="Undefined", min_length=2)):
+async def users(name: str = Query(default="Undefined", min_length=2)):
     return {"name": name}
 
 # http://127.0.0.1:8989/test_users?name=asdf
@@ -58,7 +58,16 @@ def users(name: str = Query(default="Undefined", min_length=2)):
 # Например, как в запросе по следующему адресу:
 # http://127.0.0.1:8000/users?people=tom&people=Sam&people=Bob
 @app.get("/users_list")
-def list_users(names: list[str] = Query()):
+async def list_users(names: list[str] = Query()):
     return {"names" : ", ".join(names)}
 
 # запуск: http://127.0.0.1:8989/users_list?names=Tom&names=Daniil&names=kirill
+
+
+# рассмотрим сочетание параметров пути и строки запроса
+@app.get("/path_query/{name}", response_class=PlainTextResponse)
+async def path_query(name: str = Path(min_length=3, max_length=16),
+                     age: int = Query(gt=18, lt=111)):
+    return f"name = {name}, age = {age}"
+
+# запуск: http://127.0.0.1:8989/path_query/Tom?age=23
