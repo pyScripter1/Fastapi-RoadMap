@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Калькулятор</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1>Калькулятор</h1>
+    <div id="message"></div>
+     <p>
+        Введите a: <br />
+        <input name="a" id="a" type="number"/>
+    </p>
+     <p>
+        Введите b: <br />
+        <input name="b" id="b" type="number" />
+    </p>
+    <button onclick="add()">Сложить</button>
+    <button onclick="sub()">Вычесть</button>
+    <button onclick="mult()">Умножить</button>
+    <button onclick="div()">Делить</button>
+<script>
+    async function add(){
+
+        // получаем введеное в поле имя и возраст
+        const a = document.getElementById("a").value;
+        const b = document.getElementById("b").value;
+
+        // отправляем запрос
+        const response = await fetch("/sum", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    num_a: a,
+                    num_b: b
+                })
+            });
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById("message").textContent = data.message;
+            }
+            else
+                console.log(response);
+    }
+</script>
+<script>
+    async function sub(){
+
+        // получаем введеное в поле имя и возраст
+        const a = document.getElementById("a").value;
+        const b = document.getElementById("b").value;
+
+        // отправляем запрос
+        const response = await fetch("/sub", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    num_a: a,
+                    num_b: b
+                })
+            });
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById("message").textContent = data.message;
+            }
+            else
+                console.log(response);
+    }
+</script>
+<script>
+    async function mult(){
+
+        // получаем введеное в поле имя и возраст
+        const a = document.getElementById("a").value;
+        const b = document.getElementById("b").value;
+
+        // отправляем запрос
+        const response = await fetch("/mult", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    num_a: a,
+                    num_b: b
+                })
+            });
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById("message").textContent = data.message;
+            }
+            else
+                console.log(response);
+    }
+</script>
+<script>
+    async function div(){
+
+        // получаем введеное в поле имя и возраст
+        const a = document.getElementById("a").value;
+        const b = document.getElementById("b").value;
+
+        // отправляем запрос
+        const response = await fetch("/div", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    num_a: a,
+                    num_b: b
+                })
+            });
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById("message").textContent = data.message;
+            }
+            else
+                console.log(response);
+    }
+</script>
+</body>
+</html>
